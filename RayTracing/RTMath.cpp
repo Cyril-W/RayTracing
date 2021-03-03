@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "RTMAth.h"
+#include "RTMath.h"
 
 /*
 	Vector3
