@@ -67,15 +67,13 @@ void Camera::render(const char* imgName, int width, int height, const std::list<
 
 			auto color = Vector4();
 			if (anyHit) {
-				// TODO: calculate closest light
-				auto light = *lights.begin();
-				auto lightDir = (light->center - intersection).normalize();
-				auto tempColor = calculateLight(lightDir, normalAtInter, lights);
+				// TODO: calculate closest light to intersection
+				if (lights.size() == 0) {
+					color = Vector4(0, 0, 0, 255);
+				} else {					
+					color = calculateLight(intersection, normalAtInter, lights);
+				}	
 				// TODO: cast secondary rays to cast shadow
-				/*auto tempRay = Ray(intersection, lightDir);
-				intersection = Vector3(INFINITY, INFINITY, INFINITY);
-				anyHit = castRay(tempRay, intersection, normalAtInter, objects);*/
-				color = /*anyHit ? Vector4(0, 0, 0, 255):*/  tempColor;
 			}
 			bmp.set_pixel(i, j, color[0], color[1], color[2], color[3]);
 		}
@@ -99,12 +97,25 @@ bool Camera::castRay(const Ray& r, Vector3& intersection, Vector3& normalAtInter
 	return anyHit;
 }
 
-Vector4 Camera::calculateLight(const Vector3& lightDir, const Vector3& normalAtInter, const std::list<Light*>& lights) const {
-	auto li = lightDir.dotProduct(normalAtInter);	
+Vector4 Camera::calculateLight(const Vector3& intersection, const Vector3& normalAtInter, const std::list<Light*>& lights) const {
+	Light* light = *lights.begin();
+
+	if (lights.size() > 1) {		
+		auto currentLight = light;
+		for (auto const& l : lights) {			
+			if (l->center.distance(intersection) < currentLight->center.distance(intersection)) {
+				currentLight = l;
+			}
+		}
+		light = currentLight;
+	}
+
+	auto lightFactor = (light->center - intersection).normalize().dotProduct(normalAtInter);
+	// TODO: get color of object's material
 	auto matColor = Vector4(0, 0, 255, 255);
-	auto lightFactor = Vector3(255, 255, 255) * li;
+	auto lightVector = Vector3(255, 255, 255) * lightFactor;
 	return Vector4(
-		((Vector3(matColor[0], matColor[1], matColor[2]) + lightFactor) * 0.5f).clamp(0, 255),
+		((Vector3(matColor[0], matColor[1], matColor[2]) + lightVector) * 0.5f).clamp(0, 255),
 		matColor[3]
 	);
 }
