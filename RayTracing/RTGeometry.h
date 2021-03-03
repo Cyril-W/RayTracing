@@ -4,6 +4,19 @@
 
 #pragma once
 
+struct Material {
+	const char* name;
+	Vector4 color;
+	// Reflexion
+	// Transparency
+
+	Material(const char* n);
+	Material(const char* n, Vector4 c);
+	Material(const char* n, float r, float g, float b, float a);
+
+	friend std::ostream& operator << (std::ostream& os, const Material& r);
+};
+
 struct Ray {
 	const Vector3 orig;
 	const Vector3 dir;
@@ -17,6 +30,8 @@ struct Ray {
 
 class Object {
 public:
+	//Material* mat;
+
 	virtual bool intersect(const Ray& r, Vector3& inter) const = 0;
 };
 

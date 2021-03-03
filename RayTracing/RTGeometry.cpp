@@ -3,6 +3,20 @@
 #include "RTGeometry.h"
 
 /*
+	Material
+*/
+std::ostream& operator << (std::ostream& os, const Material& m) {
+	os << "Material/ " << m.name << " of color " << m.color << std::endl;
+	return os;
+}
+
+Material::Material(const char* n) : name(n), color(0, 0, 0, 255) {}
+
+Material::Material(const char* n, Vector4 c) : name(n), color(c) {}
+
+Material::Material(const char* n, float r, float g, float b, float a) : name(n), color(r, g, b, a) {}
+
+/*
 	Ray
 */
 std::ostream& operator << (std::ostream& os, const Ray& r) {

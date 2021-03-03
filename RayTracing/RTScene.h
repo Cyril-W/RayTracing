@@ -5,6 +5,18 @@
 
 #pragma once
 
+class Light {
+private:
+	Vector3 _center;
+	// float intensity;
+public:
+	Light();
+	Light(Vector3 c);
+	Light(float x, float y, float z);
+
+	friend std::ostream& operator << (std::ostream& os, const Light& l);
+};
+
 class Camera {
 private:
 	Vector3 _center;
@@ -15,8 +27,8 @@ public:
 	Camera(Vector3 c = Vector3(), Vector3 d = Vector3(1, 1, -1), float f = 90);
 	Camera(float x = 0, float y = 0, float z = 0, float a = 1, float b = 1, float c = -1, float f = 90);
 	Mat4x4 computeCameraToWorld();
-	void render(const char* imgName, int width, int height, const std::list<Object*>& objects);
-	bool castRay(const Ray& r, Vector3& intersection, const std::list<Object*>& objects/*, const std::list<Light*> &lights*/);
+	void render(const char* imgName, int width, int height, const std::list<Object*>& objects, const std::list<Light*> &lights);
+	bool castRay(const Ray& r, Vector3& intersection, const std::list<Object*>& objects, const std::list<Light*> &lights);
 
 	friend std::ostream& operator << (std::ostream& os, const Camera& c);
 };

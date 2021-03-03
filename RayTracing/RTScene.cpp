@@ -1,7 +1,19 @@
-//#include <string>
-
 #include "RTScene.h"
 #include "libs/BMP.h"
+
+/*
+	Light
+*/
+std::ostream& operator << (std::ostream& os, const Light& l) {
+	os << "Light/ At " << l._center << std::endl;
+	return os;
+}
+
+Light::Light() : _center() {}
+
+Light::Light(Vector3 c) : _center(c) {}
+
+Light::Light(float x, float y, float z) : _center(Vector3(x, y, z)) {}
 
 /*
 	Camera
@@ -34,7 +46,7 @@ Mat4x4 Camera::computeCameraToWorld() {
 	);
 }
 
-void Camera::render(const char* imgName, int width, int height, const std::list<Object*>& objects) {
+void Camera::render(const char* imgName, int width, int height, const std::list<Object*>& objects, const std::list<Light*> &lights) {
 	BMP bmp(width, height);
 
 	auto scale = tan(_focal  * acos(-1) / 360);
@@ -50,7 +62,7 @@ void Camera::render(const char* imgName, int width, int height, const std::list<
 
 			Ray r(_center, direction);
 			Vector3 intersection = Vector3(INFINITY, INFINITY, INFINITY);
-			bool anyHit = castRay(r, intersection, objects/*, lights,*/);
+			bool anyHit = castRay(r, intersection, objects, lights);
 			/*if (i + j % 25 == 0 && anyHit) {
 				std::cout << (i + j) << " - x=" << x << " y=" << y << " intersect=" << intersection << std::endl;
 			}*/
@@ -63,19 +75,14 @@ void Camera::render(const char* imgName, int width, int height, const std::list<
 	bmp.write(imgName);
 }
 
-bool Camera::castRay(const Ray& r, Vector3& intersection, const std::list<Object*>& objects/*, const std::list<Light*> &lights*/) {
+bool Camera::castRay(const Ray& r, Vector3& intersection, const std::list<Object*>& objects, const std::list<Light*> &lights) {
 	bool anyHit = false, isHit = false;
-	Vector3 currInter;
+	Vector3 currInter = Vector3();
 	for (auto const& o : objects) {
 		isHit = o->intersect(r, currInter);
 		anyHit = anyHit || isHit;
-		if (isHit) {
-			if (currInter.distance(r.orig) < intersection.distance(r.orig)) {
-				intersection = currInter;
-			}
-			//std::cout << "Ray intersecte cet object ? Oui At " << currInter << std::endl;
-		} else {
-			//std::cout << "Ray intersecte cet object ? Non" << std::endl;
+		if (isHit && currInter.distance(r.orig) < intersection.distance(r.orig)) {
+			intersection = currInter;
 		}
 	}
 	return anyHit;
