@@ -152,6 +152,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="RayTracing.cpp" />
+    <ClCompile Include="RTGeometry.cpp" />
+    <ClCompile Include="RTMath.cpp" />
+    <ClCompile Include="RTScene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="RTGeometry.h" />
+    <ClInclude Include="RTMath.h" />
+    <ClInclude Include="RTScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
