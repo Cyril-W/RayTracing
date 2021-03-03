@@ -16,7 +16,7 @@ public:
 	Camera(float x = 0, float y = 0, float z = 0, float a = 1, float b = 1, float c = -1, float f = 90);
 	Mat4x4 computeCameraToWorld();
 	void render(const char* imgName, int width, int height, const std::list<Object*>& objects);
-	Vector4 getPixelColor(const Ray& r, const std::list<Object*>& objects/*, const std::list<Light*> &lights*/);
+	bool castRay(const Ray& r, Vector3& intersection, const std::list<Object*>& objects/*, const std::list<Light*> &lights*/);
 
 	friend std::ostream& operator << (std::ostream& os, const Camera& c);
 };

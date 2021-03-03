@@ -2,21 +2,23 @@
 
 <root>
   <objects>
+    <!--
     <plane>
       <p x="0" y="0" z="0"></p>
       <n a="0" b="1" c="0"></n>
     </plane>
+    -->
     <sphere>
-      <c x="0" y="0" z="0"></c>
-      <r>2</r>
+      <c x="0" y="0" z="10"></c>
+      <r>1</r>
     </sphere>
   </objects>
   <lights>
     
   </lights>
   <camera>
-    <c x="0" y="1" z="0"></c>
-    <d a="1" b="1" c="-1"></d>
+    <c x="0" y="0" z="0"></c>
+    <d a="0" b="0" c="-1"></d>
     <f>90</f>
   </camera>
 </root>

@@ -45,11 +45,16 @@ void Camera::render(const char* imgName, int width, int height, const std::list<
 			float x = (2 * (i + 0.5) / (float)width - 1) * aspectRatio * scale;
 			float y = (1 - 2 * (j + 0.5) / (float)height) * scale;
 
-			auto dir = (_cameraToWorld * Vector3(x, y, -1));
-			auto direction = Vector3(dir[0], dir[1], dir[2]).normalize();
+			auto dir = _cameraToWorld * Vector4(x, y, -1, 1);
+			auto direction = Vector3(dir[0], dir[1], dir[2]).normalize() ;
 
 			Ray r(_center, direction);
-			Vector4 color = getPixelColor(r, objects/*, lights,*/);
+			Vector3 intersection = Vector3(INFINITY, INFINITY, INFINITY);
+			bool anyHit = castRay(r, intersection, objects/*, lights,*/);
+			/*if (i + j % 25 == 0 && anyHit) {
+				std::cout << (i + j) << " - x=" << x << " y=" << y << " intersect=" << intersection << std::endl;
+			}*/
+			Vector4 color = anyHit ? Vector4(255, 255, 255, 255) : Vector4();
 			bmp.set_pixel(i, j, color[0], color[1], color[2], color[3]);
 		}
 	}
@@ -58,20 +63,20 @@ void Camera::render(const char* imgName, int width, int height, const std::list<
 	bmp.write(imgName);
 }
 
-Vector4 Camera::getPixelColor(const Ray& r, const std::list<Object*>& objects/*, const std::list<Light*> &lights*/) {
+bool Camera::castRay(const Ray& r, Vector3& intersection, const std::list<Object*>& objects/*, const std::list<Light*> &lights*/) {
 	bool anyHit = false, isHit = false;
-	Vector3 currInter, closestInter = Vector3(INFINITY, INFINITY, INFINITY);
+	Vector3 currInter;
 	for (auto const& o : objects) {
 		isHit = o->intersect(r, currInter);
 		anyHit = anyHit || isHit;
 		if (isHit) {
-			if (currInter.distance(r.orig) < closestInter.distance(r.orig)) {
-				closestInter = currInter;
+			if (currInter.distance(r.orig) < intersection.distance(r.orig)) {
+				intersection = currInter;
 			}
 			//std::cout << "Ray intersecte cet object ? Oui At " << currInter << std::endl;
 		} else {
 			//std::cout << "Ray intersecte cet object ? Non" << std::endl;
 		}
 	}
-	return anyHit ? Vector4(255, 255, 255, 255) : Vector4();
+	return anyHit;
 }

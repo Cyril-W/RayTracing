@@ -16,12 +16,12 @@ int main() {
 	std::list<Object*> objects;
 	UtilsXML::createObjects(sceneFile, objects);
 
-	std::cout << std::endl;
+	//std::cout << std::endl;
 
 	//std::list<Light*> lights;
 	//UtilsXML::createLights(sceneFile, lights);
 
 	std::cout << std::endl;	
 
-	camera.render("files/img_test.bmp", 10, 10, objects);
+	camera.render("files/img_test.bmp", 500, 500, objects);
 }

@@ -29,8 +29,8 @@ Plane::Plane(Vector3 p, Vector3 n) {
 		std::cerr << "Invalid Plane Definition: n = (0 ; 0 ; 0)" << std::endl;
 		return;
 	} else {
-		_normal = n;
 		_point = p;
+		_normal = n.normalize();
 	}
 }
 
@@ -40,7 +40,7 @@ Plane::Plane(float x, float y, float z, float a, float b, float c) {
 		return;
 	} else {
 		_point = Vector3(x, y, z);
-		_normal = Vector3(a, b, c);
+		_normal = Vector3(a, b, c).normalize();
 	}
 }
 
@@ -72,7 +72,7 @@ Sphere::Sphere(float x, float y, float z, float r) : _center(Vector3(x, y, z)), 
 bool Sphere::intersect(const Ray& r, Vector3& inter) const {
 	auto OC = _center - r.orig;
 	auto OA = OC.dotProduct(r.dir);
-	if (OA >= 0) { // to test ...
+	if (OA >= 0) {
 		auto AC2 = OC.dotProduct(OC) - pow(OA, 2);
 		auto r2 = pow(_r, 2);
 		if (AC2 < r2) {
