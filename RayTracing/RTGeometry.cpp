@@ -71,6 +71,10 @@ bool Plane::intersect(const Ray& r, Vector3& inter) const {
 	return false;
 }
 
+Vector3 Plane::getNormal(const Vector3& inter) const {
+	return _normal.normalize();
+}
+
 /*
 	Sphere
 */
@@ -101,4 +105,8 @@ bool Sphere::intersect(const Ray& r, Vector3& inter) const {
 		}
 	}
 	return false;
+}
+
+Vector3 Sphere::getNormal(const Vector3& inter) const { 
+	return ((inter - _center) * (1/_r)).normalize(); 
 }

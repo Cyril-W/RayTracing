@@ -7,8 +7,8 @@
 struct Material {
 	const char* name;
 	Vector4 color;
-	// Reflexion
-	// Transparency
+	// TODO: Reflexion
+	// TODO: Transparency
 
 	Material(const char* n);
 	Material(const char* n, Vector4 c);
@@ -30,9 +30,10 @@ struct Ray {
 
 class Object {
 public:
-	//Material* mat;
+	// TODO: Material* mat;
 
 	virtual bool intersect(const Ray& r, Vector3& inter) const = 0;
+	virtual Vector3 getNormal(const Vector3& inter) const = 0;
 };
 
 class Plane : Object {
@@ -45,6 +46,7 @@ public:
 	Plane(float a = 0, float b = 0, float c = 0, float x = 0, float y = 0, float z = 0);
 
 	bool intersect(const Ray& r, Vector3& inter) const override;
+	Vector3 getNormal(const Vector3& inter) const override;
 
 	friend std::ostream& operator << (std::ostream& os, const Plane& p);
 };
@@ -59,6 +61,7 @@ public:
 	Sphere(float x = 0, float y = 0, float z = 0, float r = 0);
 
 	bool intersect(const Ray& r, Vector3& inter) const override;
+	Vector3 getNormal(const Vector3& inter) const override;
 
 	friend std::ostream& operator << (std::ostream& os, const Sphere& s);
 };

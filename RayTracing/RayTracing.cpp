@@ -4,7 +4,8 @@
 #include "RTScene.h"
 #include "UtilsXML.h"
 
-/*void bindObjectToMaterials(std::list<Object*>& objects, std::list<Material*>& materials) {
+/*
+void bindObjectToMaterials(std::list<Object*>& objects, std::list<Material*>& materials) {
 	auto mat = plane->first_node("mat");
 	if (mat) {
 		for (auto const& m : materials) {
@@ -16,7 +17,8 @@
 	} else {
 		std::cerr << "Unable to create material for " << plane->name() << " (mat missing)" << std::endl;
 	}
-}*/
+}
+*/
 
 int main() {
 	auto sceneFile = "files/scene.xml";
@@ -40,9 +42,9 @@ int main() {
 	std::list<Object*> objects;
 	UtilsXML::createObjects(sceneFile, objects);
 
-	// Bind objects to materials
+	// TODO: Bind objects to materials
 	
 	std::cout << std::endl;	
 
-	camera.render("files/img_test.bmp", 500, 500, objects, lights);
+	camera.render("files/img_test.bmp", 600, 500, objects, lights);
 }

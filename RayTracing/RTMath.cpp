@@ -2,6 +2,11 @@
 
 #include "RTMath.h"
 
+inline
+float clampf(const float &lo, const float &hi, const float &v) {
+	return (v > hi) ? hi : ((v < lo) ? lo : v);
+}
+
 /*
 	Vector3
 */
@@ -51,6 +56,14 @@ float Vector3::distance(const Vector3& other) const {
 Vector3 Vector3::normalize() const {
 	auto magnitude = this->distance(Vector3(0, 0, 0));
 	return Vector3(x / magnitude, y / magnitude, z / magnitude);
+}
+
+Vector3 Vector3::clamp(const float &lo, const float &hi) {
+	return Vector3(
+		clampf(lo, hi, x),
+		clampf(lo, hi, y),
+		clampf(lo, hi, z)
+	);
 }
 
 /*

@@ -12,6 +12,7 @@ struct Vector3 {
 	Vector3 crossProduct(const Vector3& other) const;
 	float distance(const Vector3& other) const;
 	Vector3 normalize() const;
+	Vector3 clamp(const float &lo, const float &hi);
 
 	friend std::ostream& operator << (std::ostream& os, const Vector3& p);
 	friend Vector3 operator+ (const Vector3& a, const Vector3& b);
