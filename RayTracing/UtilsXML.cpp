@@ -5,6 +5,7 @@
 using namespace rapidxml;
 
 bool UtilsXML::createObjects(const char* docName, std::list<Object*>& objects) {
+	std::cout << "Reading file at: " << docName << " -> Creating Objects" << std::endl;
 	file<> xmlFile(docName);
 	xml_document<> doc;
 	doc.parse<0>(xmlFile.data());
@@ -51,6 +52,7 @@ bool UtilsXML::createObjects(const char* docName, std::list<Object*>& objects) {
 }
 
 bool UtilsXML::createCamera(const char* docName, Camera& cam) {
+	std::cout << "Reading file at: " << docName << " -> Creating Camera" << std::endl;
 	file<> xmlFile(docName);
 	xml_document<> doc;
 	doc.parse<0>(xmlFile.data());

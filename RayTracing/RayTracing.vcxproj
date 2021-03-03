@@ -155,11 +155,24 @@
     <ClCompile Include="RTGeometry.cpp" />
     <ClCompile Include="RTMath.cpp" />
     <ClCompile Include="RTScene.cpp" />
+    <ClCompile Include="UtilsXML.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="libs\BMP.h" />
+    <ClInclude Include="libs\rapidxml.hpp" />
+    <ClInclude Include="libs\rapidxml_iterators.hpp" />
+    <ClInclude Include="libs\rapidxml_print.hpp" />
+    <ClInclude Include="libs\rapidxml_utils.hpp" />
     <ClInclude Include="RTGeometry.h" />
     <ClInclude Include="RTMath.h" />
     <ClInclude Include="RTScene.h" />
+    <ClInclude Include="UtilsXML.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="files\img_test.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="files\scene.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

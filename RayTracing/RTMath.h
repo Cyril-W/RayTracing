@@ -40,4 +40,5 @@ struct Mat4x4 {
 	Vector4& operator[] (int index);
 
 	friend std::ostream& operator << (std::ostream& os, const Mat4x4& m);
+	friend Vector4 operator*(const Mat4x4& m, const Vector4& v);
 };

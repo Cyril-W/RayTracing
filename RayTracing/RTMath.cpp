@@ -63,7 +63,7 @@ std::ostream& operator << (std::ostream& os, const Vector4& v) {
 
 Vector4::Vector4(float a, float b, float c, float d) : values{ a, b, c, d } {}
 
-Vector4::Vector4(Vector3 v, float d = 0) : values{ v.x, v.y, v.z, d } {}
+Vector4::Vector4(Vector3 v, float d) : values{ v.x, v.y, v.z, d } {}
 
 const float& Vector4::operator[] (int index) const {
 	return values[index];
@@ -99,4 +99,13 @@ const Vector4& Mat4x4::operator[] (int index) const {
 
 Vector4& Mat4x4::operator[] (int index) {
 	return columns[index];
+}
+
+Vector4 operator*(const Mat4x4& m, const Vector4& v) {
+	return Vector4(
+		m[0][0] * v[0] + m[1][0] * v[1] + m[2][0] * v[2] + m[3][0] * v[3],
+		m[0][1] * v[0] + m[1][1] * v[1] + m[2][1] * v[2] + m[3][1] * v[3],
+		m[0][2] * v[0] + m[1][2] * v[1] + m[2][2] * v[2] + m[3][2] * v[3],
+		m[0][3] * v[0] + m[1][3] * v[1] + m[2][3] * v[2] + m[3][3] * v[3]
+	);
 }
